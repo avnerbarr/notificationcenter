@@ -2,8 +2,8 @@ mod actortest;
 use crate::actortest::{MyActor, Ping};
 use actix::prelude::*;
 use notificationcenter::{NotificationCenter, Token};
-use std::sync::Mutex;
 use std::borrow::Borrow;
+use std::sync::Mutex;
 
 #[actix_rt::main]
 async fn main() {
@@ -11,7 +11,7 @@ async fn main() {
     let addr = MyActor { count: 10 }.start();
 
     // send message and get future for result
-    let res = addr.send(Ping{ i: 1 }).await;
+    let res = addr.send(Ping { i: 1 }).await;
 
     // handle() returns tokio handle
     println!("RESULT: {}", res.unwrap() == 20);
@@ -29,7 +29,10 @@ async fn main() {
         println!("got notified here too");
     });
 
-    let mut str = SomeStruct { this_thing: 1, token: Mutex::new(None) };
+    let mut str = SomeStruct {
+        this_thing: 1,
+        token: Mutex::new(None),
+    };
     str.do_some_work();
     NotificationCenter::post("notification".to_string());
     NotificationCenter::post_async("notification".to_string());
@@ -43,12 +46,11 @@ async fn main() {
         }
     });
     std::thread::park();
-
 }
 
 struct SomeStruct {
-    this_thing : i32,
-    token : Mutex<Option<Token>>
+    this_thing: i32,
+    token: Mutex<Option<Token>>,
 }
 
 impl SomeStruct {

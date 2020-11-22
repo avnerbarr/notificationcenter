@@ -3,9 +3,8 @@ use actix::prelude::*;
 #[derive(Message)]
 #[rtype(result = "i32")]
 pub struct Ping {
-    pub i: i32
+    pub i: i32,
 }
-
 
 pub struct MyActor {
     pub count: i32,
